@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ultra Speaking Practice — Master public speaking with interactive exercises: Word Association Riff, The Conductor, The Headline Drill, and Telescoping.">
+  <title>Ultra Speaking Practice</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/exercises.css">
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- HOME VIEW                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="view-home" class="view active" aria-label="Exercise selection">
+      <h1 class="gradient-text" style="text-align:center; margin-bottom: var(--space-2);">
+        Ultra Speaking Practice
+      </h1>
+      <p style="color: var(--text-secondary); text-align: center; font-size: var(--font-size-lg); max-width: 28rem;">
+        Choose an exercise and sharpen your speaking skills
+      </p>
+
+      <div class="exercise-grid" id="exercise-grid">
+        <!-- Cards are injected by app.js -->
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- CONFIG VIEW                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="view-config" class="view" aria-label="Exercise configuration">
+      <div class="config-panel">
+        <div class="config-header">
+          <span class="config-header__icon" id="config-icon"></span>
+          <h2 class="config-header__title" id="config-title"></h2>
+          <p class="config-header__desc" id="config-description"></p>
+        </div>
+
+        <!-- Duration -->
+        <div class="config-group">
+          <label class="config-group__label">Session Duration</label>
+          <div class="range-slider">
+            <input type="range" id="config-duration" min="1" max="20" value="3" step="1" aria-label="Session duration in minutes">
+            <span class="range-slider__value" id="config-duration-display">3 min</span>
+          </div>
+        </div>
+
+        <!-- Difficulty -->
+        <div class="config-group">
+          <label class="config-group__label">Difficulty</label>
+          <div class="difficulty-selector" id="config-difficulty" role="radiogroup" aria-label="Difficulty level">
+            <button class="difficulty-btn active" data-difficulty="easy" role="radio" aria-checked="true">Easy</button>
+            <button class="difficulty-btn" data-difficulty="medium" role="radio" aria-checked="false">Medium</button>
+            <button class="difficulty-btn" data-difficulty="hard" role="radio" aria-checked="false">Hard</button>
+          </div>
+          <p class="config-group__sublabel" id="config-difficulty-desc"></p>
+        </div>
+
+        <!-- Recording Toggle -->
+        <div class="config-group">
+          <div class="toggle-row glass-card" style="padding: var(--space-5);">
+            <div class="toggle-row__text">
+              <span class="toggle-row__label">🎙️ Record my session</span>
+              <span class="toggle-row__desc">Play back your speech afterwards</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="config-recording" aria-label="Toggle session recording">
+              <span class="toggle-switch__track"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: var(--space-4); justify-content: center; margin-top: var(--space-8);">
+          <button class="btn btn-secondary" id="config-back-btn">← Back</button>
+          <button class="btn btn-primary btn-lg" id="config-start-btn">Start Practice</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- SESSION VIEW                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="view-session" class="view" aria-label="Active session">
+      <div class="session-header">
+        <span class="session-header__name" id="session-exercise-name"></span>
+        <div class="session-header__controls">
+          <div id="session-recording-indicator" class="recording-indicator hidden">
+            <span class="rec-dot"></span> Recording
+          </div>
+          <button class="btn btn-icon btn-secondary" id="session-mute-btn" aria-label="Toggle sound" title="Toggle sound">
+            🔊
+          </button>
+        </div>
+      </div>
+
+      <!-- Timer Ring -->
+      <div class="timer-container" id="timer-container">
+        <svg class="timer-ring" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="timer-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--accent-conductor)" />
+              <stop offset="100%" stop-color="var(--accent-headline)" />
+            </linearGradient>
+          </defs>
+          <circle class="timer-ring__bg" cx="100" cy="100" r="90" />
+          <circle class="timer-ring__progress" id="timer-ring-progress" cx="100" cy="100" r="90" />
+        </svg>
+        <div class="timer-display">
+          <span class="timer-display__time" id="timer-time">3:00</span>
+          <span class="timer-display__label" id="timer-label">remaining</span>
+        </div>
+      </div>
+
+      <!-- Exercise Content (injected per exercise) -->
+      <div class="exercise-content" id="exercise-content"></div>
+
+      <!-- Session Controls -->
+      <div class="session-controls">
+        <button class="btn btn-secondary" id="session-pause-btn">⏸ Pause</button>
+        <button class="btn btn-danger" id="session-stop-btn">■ Stop</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- COMPLETE VIEW                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="view-complete" class="view" aria-label="Session complete">
+      <div class="complete-panel">
+        <h2 class="complete-panel__title">🎉 Session Complete!</h2>
+        <p class="complete-panel__subtitle" id="complete-subtitle"></p>
+
+        <div class="complete-stats" id="complete-stats">
+          <!-- Stats injected by exercise module -->
+        </div>
+
+        <div class="complete-recording" id="complete-recording" style="display: none;">
+          <h3>🎙️ Your Recording</h3>
+          <audio id="complete-audio" controls></audio>
+          <button class="btn btn-secondary" id="complete-download-btn" style="margin-top: var(--space-3);">⬇ Download Recording</button>
+        </div>
+
+        <div class="complete-actions">
+          <button class="btn btn-primary btn-lg" id="complete-retry-btn">🔄 Try Again</button>
+          <button class="btn btn-secondary" id="complete-home-btn">← Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════── -->
+  <!-- Scripts (ES Modules)                                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════── -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
