@@ -1,4 +1,4 @@
-# 🎙️ Ultra Speaking Practice
+# 🎙️ Public Speaking Practice
 
 An interactive, premium single-page web application designed to help you practice and master public speaking exercises. The app features a modern dark glassmorphism design, immersive audio cues, customizable exercise lengths and difficulties, and an optional microphone recording system with local audio download.
 
@@ -42,7 +42,7 @@ Then open the URL shown in your terminal (usually `http://localhost:3000` or `ht
 ## 📁 Project Structure
 
 ```
-Ultra_speaking_practice/
+public-speaking-practice/
 ├── index.html                     # Single-page layout containing all views
 ├── README.md                      # Project documentation (this file)
 ├── css/
@@ -76,5 +76,5 @@ Because the app is built entirely with client-side HTML, CSS, and JavaScript, yo
 
 ### 2. Netlify (Drag and Drop)
 1. Go to [Netlify Drop](https://app.netlify.com/drop).
-2. Drag and drop the `Ultra_speaking_practice` folder onto the browser window.
+2. Drag and drop the project folder onto the browser window.
 3. Your app will be deployed instantly!

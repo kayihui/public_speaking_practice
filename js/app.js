@@ -401,7 +401,7 @@ function bindEvents() {
     const timestamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, '-');
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ultra-speaking-${name}-${timestamp}.webm`;
+    a.download = `public-speaking-${name}-${timestamp}.webm`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
